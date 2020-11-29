@@ -1,0 +1,215 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+			"path": "pages/shop/index",
+			"style": {
+				"navigationBarTitleText": "商户管理"
+			}
+		},
+		{
+			"path": "pages/common/business-license",
+			"style": {
+				"navigationBarTitleText": "营业执照"
+			}
+		},
+		{
+			"path": "pages/shop/partner-info",
+			"style": {
+				"navigationBarTitleText": "个体户管理222"
+			}
+		},
+		{
+			"path": "pages/shop/personal-management",
+			"style": {
+				"navigationBarTitleText": "个体户管理"
+			}
+		},
+		{
+			"path": "pages/shop/add-user",
+			"style": {
+				"navigationBarTitleText": "新建（编辑）商户"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		}, {
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		}, {
+			"path": "pages/login/forget",
+			"style": {
+				"navigationBarTitleText": "忘记密码"
+			}
+		},
+		{
+			"path": "pages/crowdList/index",
+			"style": {
+				"navigationBarTitleText": "众包支付清单"
+			}
+		},
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/article/protocol",
+			"style": {
+				"navigationBarTitleText": "地衣众包用户协议"
+			}
+		},
+		{
+			"path": "pages/article/privacy",
+			"style": {
+				"navigationBarTitleText": "地衣众包隐私政策"
+			}
+		},
+		{
+			"path": "pages/shop/user-detail",
+			"style": {
+				"navigationBarTitleText": "商户详情"
+			}
+		},
+		{
+			"path": "pages/address/index",
+			"style": {
+				"navigationBarTitleText": "收货地址"
+			}
+		},
+		{
+			"path": "pages/address/edit",
+			"style": {
+				"navigationBarTitleText": "编辑地址"
+			}
+		},
+		{
+			"path": "pages/address/add",
+			"style": {
+				"navigationBarTitleText": "添加地址"
+			}
+		},
+		{
+			"path": "pages/common/agreement-list",
+			"style": {
+				"navigationBarTitleText": "商户加盟平台协议"
+			}
+		},
+		{
+			"path": "pages/common/acknowledgement-list",
+			"style": {
+				"navigationBarTitleText": "商户承诺函"
+			}
+		},
+		{
+			"path": "pages/personal/index",
+			"style": {
+				"navigationBarTitleText": "个体户管理"
+			}
+		},
+		{
+			"path": "pages/personal/detail",
+			"style": {
+				"navigationBarTitleText": "个体户详情"
+			}
+		},
+		{
+			"path": "pages/personal/add",
+			"style": {
+				"navigationBarTitleText": "个体户注册"
+			}
+		},
+		{
+			"path": "pages/individual/index",
+			"style": {
+				"navigationBarTitleText": "个独管理"
+			}
+		},
+		{
+			"path": "pages/individual/add",
+			"style": {
+				"navigationBarTitleText": "个独添加"
+			}
+		},
+		{
+			"path": "pages/individual/detail",
+			"style": {
+				"navigationBarTitleText": "个独企业详情"
+			}
+		},
+		{
+			"path": "pages/associate/index",
+			"style": {
+				"navigationBarTitleText": "交易明细"
+			}
+		},
+		{
+			"path": "pages/associate/associate-detail",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+			}
+		},
+		{
+			"path": "pages/user/userinfo",
+			"style": {
+				"navigationBarTitleText": "合伙人信息"
+			}
+		},    
+		{
+			"path": "pages/user/edit",
+			"style": {
+				"navigationBarTitleText": "编辑信息"
+			}
+		},  
+		{
+			"path": "pages/zhiwen-livepush/zhiwen-livepush",
+			"style": {
+				"navigationBarTitleText": "视频"
+			}
+		},
+		{
+			"path": "pages/common/makeList",
+			"style": {
+				"navigationBarTitleText": "创客"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "地衣众包合伙人",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#D3D7DD",
+		"selectedColor": "#406CFF",
+		"borderStyle": "white",
+		"backgroundColor": "#F7F8F9",
+		"list": [{
+				"pagePath": "pages/shop/index",
+				"iconPath": "static/tabbar/01.png",
+				"selectedIconPath": "static/tabbar/01-01.png",
+				"text": "商户管理"
+			}, {
+				"pagePath": "pages/crowdList/index",
+				"iconPath": "static/tabbar/02.png",
+				"selectedIconPath": "static/tabbar/02-02.png",
+				"text": "众包支付清单"
+			},
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/tabbar/03.png",
+				"selectedIconPath": "static/tabbar/03-03.png",
+				"text": "我的"
+			}
+		]
+	}
+}
