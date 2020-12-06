@@ -1,7 +1,17 @@
 <template>
 	<!-- 营业执照页面 -->
 	<view class="page">
-		<view v-if="imgFiles.length > 0" class="add-wrap" @click="previewImage">
+		<view class="updata-wrap">
+			<c-upload 
+				:fileList="fileList" 
+				:show-upload-list="true" 
+				:max-count="1" 
+				@on-remove="delField"
+				@on-success="setField">
+			</c-upload>
+		</view>
+		
+		<!-- <view v-if="imgFiles.length > 0" class="add-wrap" @click="previewImage">
 			<view class="image-box">
 				<image style="width: 200rpx;" :src="imgFiles[0]" mode="widthFix"></image>
 				<image @click.stop="delImg" class="del" src="/static/shop/del.png" mode="widthFix"></image>
@@ -10,18 +20,25 @@
 		<view v-if="!imgFiles.length > 0" class="add-wrap" @click="chooseTheImg">
 			<image src="/static/shop/add.png" mode="widthFix"></image>
 			<view class="text">上传</view>
-		</view>
-		<view v-if="imgFiles.length > 0" class="btn-b-blue btn" @click="chooseTheImg">
+		</view> -->
+		<!-- <view class="btn-b-blue btn" @click="chooseTheImg">
 			重新上传
-		</view>
+		</view> -->
 	</view>
 </template>
 
 <script>
+	import cUpload from '@/components/cUpload.vue';
 export default {
 	data() {
 		return {
+			eventName:"",
+			bizLicenceUrl:"",
+			fileList:[]
 		};
+	},
+	components: {
+		cUpload
 	},
 	computed:{
 	  imgFiles:{
@@ -34,9 +51,29 @@ export default {
 	  }
 	},
 	onLoad(options){
-	
+		 
+		if(options&&options.eventName){
+			this.eventName = options.eventName
+		}
+		if(options&&options.bizLicenceUrl){
+			this.fileList.push({url:options.bizLicenceUrl})
+		}
 	},
 	methods: {
+		delField(res){
+			console.log("删除图片路径===",res)
+			if(this.eventName){
+				this.$EventBus.$emit(this.eventName, JSON.stringify(""))
+			}
+		},
+		setField(res) {
+			console.log("上传路径：",res)
+			// this.fileList.push(res.data);
+			if(this.eventName){
+				this.$EventBus.$emit(this.eventName, JSON.stringify(res.data))
+			}
+			// this.form.investorHandCommitment = res.data;
+		},
 		// 选择上传图片
 		chooseTheImg() {
 			this.$chooseImage(1).then(res => {
@@ -55,14 +92,17 @@ export default {
 		// 上传图片
 		uploadImg() {
 			uni.uploadFile({
-				url:"",
+				url:process.env.VUE_APP_BASE_API + process.env.VUE_APP_UPLOAD_URL,
 				filePath: this.imgFiles[0],
 				name: 'file',
 				formData: {
 					
 				},
 				success: uploadFileRes => {
-					console.log("上传成功！！")
+					console.log("上传成功：",uploadFileRes)
+					// if(this.eventName){
+					// 	this.$EventBus.$emit(this.eventName, JSON.stringify(item))
+					// }
 					resolve('success');
 				}
 			});
@@ -78,6 +118,11 @@ export default {
 
 <style lang="scss">
 .page {
+	.updata-wrap{
+		margin-top: 20rpx;
+		background-color: #FFFFFF;
+		padding: 30rpx;
+	}
 	.add-wrap {	
 		margin-top: 20rpx;
 		background-color: #fff;

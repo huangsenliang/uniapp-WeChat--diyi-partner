@@ -35,7 +35,7 @@ const store = new Vuex.Store({
 		vuex_token: 'eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiIiLCJ1c2VyX2lkIjoiMTMyODI0NzgyMDA1NTg3MTQ4OSIsInJvbGVfaWQiOiIiLCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIiwiYWNjb3VudCI6IjE4ODU2NDk5MjU3IiwiY2xpZW50X2lkIjoic3dvcmQiLCJleHAiOjE2MDYyMTc3MDAsIm5iZiI6MTYwNTYxMjkwMH0.iXuHo_OFM9VYTH-4tItAErifgTK8E-TTxqf8hmgLCGQ',
 		// #endif
 		// // #ifndef H5
-		// vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
+		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
 		// // #endif
 		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {},
 		vuex_token_data: lifeData.vuex_token_data ? lifeData.vuex_token_data : {},

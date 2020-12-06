@@ -68,7 +68,8 @@ export default {
 	},
 	onLoad(e) {
 		this.id = e.id;
-
+	},
+	onShow(){
 		this.$nextTick(() => {
 			this.fetchData();
 		});

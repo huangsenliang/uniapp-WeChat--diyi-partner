@@ -2,7 +2,14 @@
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [{
+	"pages": [
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
 			"path": "pages/shop/index",
 			"style": {
 				"navigationBarTitleText": "商户管理"
@@ -15,21 +22,10 @@
 			}
 		},
 		{
-			"path": "pages/shop/partner-info",
-			"style": {
-				"navigationBarTitleText": "个体户管理222"
-			}
-		},
-		{
-			"path": "pages/shop/personal-management",
-			"style": {
-				"navigationBarTitleText": "个体户管理"
-			}
-		},
-		{
 			"path": "pages/shop/add-user",
 			"style": {
-				"navigationBarTitleText": "新建（编辑）商户"
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
 			}
 		},
 		{
@@ -54,12 +50,7 @@
 				"navigationBarTitleText": "众包支付清单"
 			}
 		},
-		{
-			"path": "pages/home/index",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		},
+		
 		{
 			"path": "pages/article/protocol",
 			"style": {
@@ -94,6 +85,12 @@
 			"path": "pages/address/add",
 			"style": {
 				"navigationBarTitleText": "添加地址"
+			}
+		},
+		{
+			"path": "pages/address/choose",
+			"style": {
+				"navigationBarTitleText": "选择地址"
 			}
 		},
 		{
@@ -162,17 +159,11 @@
 			"style": {
 				"navigationBarTitleText": "合伙人信息"
 			}
-		},    
+		},
 		{
 			"path": "pages/user/edit",
 			"style": {
 				"navigationBarTitleText": "编辑信息"
-			}
-		},  
-		{
-			"path": "pages/zhiwen-livepush/zhiwen-livepush",
-			"style": {
-				"navigationBarTitleText": "视频"
 			}
 		},
 		{
@@ -198,12 +189,15 @@
 				"iconPath": "static/tabbar/01.png",
 				"selectedIconPath": "static/tabbar/01-01.png",
 				"text": "商户管理"
-			}, {
+			},
+			// #ifndef MP-WEIXIN
+			{
 				"pagePath": "pages/crowdList/index",
 				"iconPath": "static/tabbar/02.png",
 				"selectedIconPath": "static/tabbar/02-02.png",
 				"text": "众包支付清单"
 			},
+			// #endif
 			{
 				"pagePath": "pages/home/index",
 				"iconPath": "static/tabbar/03.png",

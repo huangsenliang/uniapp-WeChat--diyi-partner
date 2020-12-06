@@ -151,6 +151,7 @@
 				})
 			},
 			submit() {
+				this.getWxCode();
 				if (this.current == 0) {
 					// 账号密码登录
 					const formData = Object.assign({}, this.formDataA)
@@ -169,6 +170,9 @@
 						wechatCode: this.wxCode||"4444"
 					}).then(res => {
 						console.warn("登录信息返还：",res.data);
+						if(res.code===400){
+							return this.$u.toast(res.msg)
+						}
 						this.getUserInfo(res.data)
 					}).catch(res => {
 						this.$toast(res.msg)
@@ -206,6 +210,7 @@
 				wx.login({
 					success: function(res) {
 						that.wxCode = res.code;
+						console.log("wxCode====",res)
 						that.$loading(false);
 					},
 					complete: function() {

@@ -1,7 +1,7 @@
 <template>
 	<!-- 协议页面 -->
 	<view class="page">
-		<view class="image-box flex align-items" @click="openFile">
+		<view class="image-box flex align-items" @click="openFile(item.url)" v-for="(item,index) of 2" :key="index">
 			<image src="/static/common/pdf.png" mode="widthFix"></image>
 			<text class="name">xxx.pdf</text>
 		</view>
@@ -12,12 +12,12 @@
 	export default{
 		data(){
 			return {
-				fileUrl:""
+				fileList:[]
 			}
 		},
 		methods:{
-			openFile(){
-				this.$openFile(this.fileUrl)
+			openFile(fileUrl){
+				this.$openFile(fileUrl)
 			},
 		}
 	}

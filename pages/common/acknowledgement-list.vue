@@ -19,7 +19,8 @@
 			openFile(fileUrl){
 				this.$openFile(fileUrl)
 			},
-		}
+		},
+		
 	}
 </script>
 

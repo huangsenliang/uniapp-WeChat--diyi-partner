@@ -179,3 +179,11 @@ $color-gray: #e4e7ed;
 		font-size: 36rpx;
 		color: #000;
 	}
+
+// 文字溢出隐藏
+.ellipsis-text{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+	

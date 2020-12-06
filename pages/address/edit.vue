@@ -26,7 +26,7 @@
 </template>
 
 <script>
-// import { update, getDetail } from '@/api/address.js';
+import { update, getDetail } from '@/api/address.js';
 export default {
 	data() {
 		return {
@@ -79,6 +79,7 @@ export default {
 	},
 	onLoad(e) {
 		this.id = e.id
+		console.log("e===",e)
 		this.$nextTick(() => {
 			this.fetchData()
 		})
@@ -88,6 +89,7 @@ export default {
 	},
 	methods: {
 		fetchData() {
+			console.log("getDetail===",getDetail)
 			this.$loading()
 			getDetail({
 				addressId: this.id

@@ -33,6 +33,7 @@ export function getList(params) {
  * @param {Object} params
  */
 export function getDetail(params) {
+	console.log("8888888888")
 	return request.get('/diyi-user/partner/individual-enterprise/query-individual-enterprise-detail', {
 		params
 	})
@@ -43,6 +44,7 @@ export function getDetail(params) {
  * @param {Object} params
  */
 export function getDetail2(params) {
+	
 	return request.get('/diyi-user/partner/individual-enterprise/query-update-individual-enterprise-detail', {
 		params
 	})

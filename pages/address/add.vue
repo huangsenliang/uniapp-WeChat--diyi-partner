@@ -26,7 +26,7 @@
 </template>
 
 <script>
-// import { update } from '@/api/address.js'	
+import { update } from '@/api/address.js'	
 export default {
 	data() {
 		return {
@@ -40,7 +40,7 @@ export default {
 				addressPhone: '',
 				region: '',
 				detailedAddress: '',
-				isDefault: false
+				isDefault: false,
 			},
 			rules: {
 				addressName: [
@@ -78,7 +78,7 @@ export default {
 		};
 	},
 	onReady() {
-		// this.$refs.uForm.setRules(this.rules);
+		this.$refs.uForm.setRules(this.rules);
 	},
 	methods: {
 		showRegionPicker() {
@@ -90,12 +90,21 @@ export default {
 			this.formData.region = e.province.label + '-' + e.city.label + '-' + e.area.label;
 			this.formData.province = e.province.label
 			this.formData.city = e.city.label
-			this.formData.area = e.area.label
+			this.formData.area = e.area.label  
 		},
 		submit() {
 			this.$refs.uForm.validate(valid => {
 				if (valid) {
-					let form = Object.assign({}, this.formData)
+					let {
+						addressName,
+						addressPhone,
+						area,
+						city,
+						detailedAddress,
+						isDefault,
+						province
+					} = this.formData
+					let form = {addressName,addressPhone,area,city,detailedAddress,isDefault,province}
 					this.loading = true
 					this.$loading()
 					update(form).then(res => {

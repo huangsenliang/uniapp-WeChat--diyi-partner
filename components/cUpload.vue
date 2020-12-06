@@ -1,6 +1,7 @@
 <template>
 	<view class="page">
 		<u-upload
+			ref="upload"
 			:custom-btn="customBtn"
 			:show-upload-list="showUploadList"
 			:header="header"
@@ -76,7 +77,11 @@ export default {
 			};
 		}
 	},
+	created(){
+		console.log(" this.vuex_token=======", this.vuex_token)
+	},
 	methods: {
+		
 		uploadSuccess(res, index, lists) {
 			if (res.code != 200) {
 				this.$u.toast(res.message)
@@ -85,7 +90,9 @@ export default {
 				this.$emit('on-success', res, index, lists);
 			}
 		},
-		uploadRemove(index, lists) {
+		uploadRemove(res,index, lists) {
+			// this.$emit('on-del',"");
+			// console.log(res,555555555)
 			this.$emit('on-remove', index, lists);
 		},
 		uploadError(res, index, lists) {

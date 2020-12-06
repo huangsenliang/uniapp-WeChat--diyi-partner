@@ -13,8 +13,8 @@
 			</view>
 			<view class="u-flex-1">
 				<view class="u-p-b-10 u-flex u-row-left u-col-center">
-					<view class="username" v-if="vuex_user.name">{{ vuex_user.name }}</view>
-					<view class="username" v-else>
+					<view class="username ellipsis-text" v-if="vuex_user.name">{{ vuex_user.name }}</view>
+					<view class="username ellipsis-text" v-else>
 						<!-- #ifdef MP-WEIXIN -->
 						<open-data type="userNickName"></open-data>
 						<!-- #endif -->
@@ -111,6 +111,7 @@ export default {
 	overflow: hidden;
 }
 .username {
+	width: 350rpx;
 	font-size: 42rpx;
 	font-weight: 800;
 	color: rgba(51, 51, 51, 1);

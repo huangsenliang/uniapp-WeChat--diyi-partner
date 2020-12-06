@@ -1,19 +1,17 @@
 <template>
 	<view class="u-p-t-20 wrap">
 		<u-top-tips ref="uTips"></u-top-tips>
-		<view class="item" v-for="(res, k) in 2" :key="k">
+		<view class="item" v-for="(res, k) in lists" :key="k">
 			<view class="top">
-				<!-- <view class="name">{{ res.addressName }}</view>
-				<view class="phone">{{ res.addressPhone }}</view> -->
-				<view class="name">小明</view>
-				<view class="phone">1222222222</view>
+				<view class="name">{{ res.addressName }}</view>
+				<view class="phone">{{ res.addressPhone }}</view>
 				<view class="tag">
-					<!-- <text v-if="res.isDefault == 1" class="red">默认</text> -->
-					<text class="red">默认</text>
+					<text v-if="res.isDefault == 1" class="red">默认</text>
 				</view>
 			</view>
 			<view class="bottom">{{res.detailedAddress}}</view>
 			<view class="action u-row-right u-col-center">
+				<!-- <view sty style="margin-right: 200rpx;" class="btn-s-blue">选择</view> -->
 				<u-icon @click="edit(res)" class="u-m-r-80 label-margin" label="编辑" label-pos="left" size="46" color="#9B9B9B" name="edit" custom-prefix="custom-icon"></u-icon>
 				<u-icon @click="del(res)" class="u-m-r-20 label-margin" label="删除" label-pos="left" size="46" color="#9B9B9B" name="del" custom-prefix="custom-icon"></u-icon>
 			</view>
@@ -24,7 +22,7 @@
 </template>
 
 <script>
-// import { getList, del } from '@/api/address.js';
+import { getList, del } from '@/api/address.js';
 export default {
 	data() {
 		return {
@@ -36,11 +34,8 @@ export default {
 			}
 		};
 	},
-	onReady() {
-		// this.fetchData();
-	},
 	onShow() {
-		// this.resetData()
+		this.resetData()
 	},
 	methods: {
 		resetData(pulldown) {
@@ -51,6 +46,7 @@ export default {
 			});
 		},
 		fetchData(pulldown) {
+			console.log("触发分页")
 			this.status = 'loading';
 			getList(Object.assign({}, this.paramsData))
 				.then(res => {
@@ -78,9 +74,9 @@ export default {
 			});
 		},
 		edit(item) {
-			console.log("44444444444")
+			console.log("item==",item)
 			uni.navigateTo({
-				url: '/pages/address/edit?id=' + item.addressId
+				url: '/pages/address/edit?id=' + item.id
 			});
 		},
 		del(item) {
@@ -98,7 +94,7 @@ export default {
 		doDel(item) {
 			this.$loading()
 			del({
-				addressId: item.addressId
+				addressId: item.id
 			}).then(res => {
 				this.$toast('删除成功', true)
 				this.resetData()

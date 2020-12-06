@@ -77,15 +77,17 @@ export default {
 		}
 	},
 	created() {
+		
 		if (this.type === 'editor') {
 			getDetail2({
-				individualBusinessId: this.individualBusinessId
+				individualEnterpriseId: this.individualBusinessId
 			})
 				.then(res => {
 					let data = res.data;
 					if (this.$u.test.isEmpty(data.ibname)) {
 						data.ibname = data.candidatedNames.split(',')[0];
 					}
+					
 					console.log('data======', data);
 					this.form = data;
 					this.typeText = data.mainIndustry;
@@ -100,6 +102,7 @@ export default {
 							});
 						}
 					});
+					this.form.companyName = data.ibname;
 				})
 				.catch(res => {
 					this.$toast(res.msg);
@@ -226,16 +229,14 @@ export default {
 			let otherArray = [];
 							
 			otherArray.push(form.companyName);
-							
+			console.log("other",other)		
 			other.map((val, index) => {
 				let value = this.$u.trim(val.value);
-				if (value.length) {
+				if (value.length>0 && value) {
 					otherArray.push(value);
 				}
 			});
-			let name = form.candidatedNames;
-			let name2 = otherArray.join(',');
-			form.candidatedNames = name + name2;
+			form.candidatedNames = otherArray.join(',');
 			this.$emit('next', form);
 		},
 		next() {

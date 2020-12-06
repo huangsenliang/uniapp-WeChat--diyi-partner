@@ -1,17 +1,25 @@
 <template>
 	<!-- 众包明细页面 -->
 	<view class="page">
-		<u-navbar title-width="300" back-icon-color="#000" :title-bold="true" :title="type == 0 ? '总包+分包交易明细' : '众包/众采交易明细'"></u-navbar>
+		<u-navbar
+			back-icon-size="50rpx"
+			title-size="40"
+			title-color="#000"
+			title-width="300"
+			back-icon-color="#000"
+			:title-bold="true"
+			:title="type == 0 ? '总包+分包交易明细' : '众包/众采交易明细'"
+		></u-navbar>
 		<view class="body">
 			<!--  -->
 			<view class="header-title">
 				<view class="title-item flex">
 					<text class="title">商户</text>
-					<text class="name">上海****科技有限公司</text>
+					<text class="name">{{ payEnterpriseData.enterpriseName }}</text>
 				</view>
 				<view class="title-item flex">
 					<text class="title">服务商</text>
-					<text class="name">深圳***企业服务有限公司</text>
+					<text class="name">{{ payEnterpriseData.serviceProviderName }}</text>
 				</view>
 			</view>
 			<!--  -->
@@ -21,72 +29,97 @@
 					<view class="list-title flex align-items">支付信息</view>
 					<view class="list-item flex justify-between align-items">
 						<text>支付编号</text>
-						<text class="right">0MA54W</text>
+						<text class="right">{{ payEnterpriseData.id }}</text>
 					</view>
 					<view class="list-item flex justify-between align-items">
 						<text>支付清单</text>
-						<image src="/static/shop/right.png" style="width: 40rpx;" mode="widthFix"></image>
+						<image :src="payEnterpriseData.chargeListUrl" style="width: 40rpx;" mode="widthFix"></image>
 					</view>
 					<view class="list-item flex justify-between align-items">
 						<text>支付回单</text>
-						<image src="/static/shop/right.png" style="width: 40rpx;" mode="widthFix"></image>
+						<image :src="payEnterpriseData.enterprisePayReceiptUrls" style="width: 40rpx;" mode="widthFix"></image>
 					</view>
-					<view class="list-item flex justify-between align-items">
+					<!-- <view class="list-item flex justify-between align-items">
 						<text>关联的工单</text>
 						<image src="/static/shop/right.png" style="width: 40rpx;" mode="widthFix"></image>
-					</view>
+					</view> -->
 					<view class="list-item flex justify-between align-items">
 						<text>交付支付验收单</text>
-						<image src="/static/shop/right.png" style="width: 40rpx;" mode="widthFix"></image>
+						<image :src="payEnterpriseData.acceptPaysheetUrls" style="width: 40rpx;" mode="widthFix"></image>
 					</view>
-					<view class="list-item flex justify-between align-items">
+					<!-- <view class="list-item flex justify-between align-items">
 						<text>支付编号</text>
 						<text class="right">0MA54W</text>
-					</view>
+					</view> -->
 					<view class="list-item flex justify-between align-items">
 						<text>状态</text>
-						<text class="right">审核通过</text>
+						<text class="right">{{ payEnterpriseData.payState }}</text>
 					</view>
 					<view class="list-item flex justify-between align-items">
 						<text>时间</text>
-						<text class="right">2020-10-31 23:12:00</text>
+						<text class="right">{{ payEnterpriseData.createTime }}</text>
 					</view>
 				</view>
 				<!--  -->
 				<view class="list-wrap">
 					<view class="list-title flex align-items">发票信息</view>
-					<view class="list-item flex justify-between align-items">
+					<!-- <view class="list-item flex justify-between align-items">
 						<text>发票编号</text>
 						<text class="right">0MA54W</text>
-					</view>
-					<view class="list-item flex justify-between align-items">
+					</view> -->
+					<!-- <view class="list-item flex justify-between align-items">
 						<text>发票</text>
 						<image src="/static/shop/right.png" style="width: 40rpx;" mode="widthFix"></image>
-					</view>
-					<view class="list-item flex justify-between align-items">
+					</view> -->
+					<!-- <view class="list-item flex justify-between align-items">
 						<text>税票</text>
 						<image src="/static/shop/right.png" style="width: 40rpx;" mode="widthFix"></image>
-					</view>
+					</view> -->
 					<view class="list-item flex justify-between align-items">
 						<text>开票状态</text>
-						<text class="right">已开票</text>
+						<text class="right">{{ payEnterpriseData.companyInvoiceState }}</text>
 					</view>
 					<view class="list-item flex justify-between align-items">
-						<text>时间</text>
-						<text class="right">审核通过</text>
+						<text>审核状态</text>
+						<text class="right">{{ payEnterpriseData.auditState }}</text>
 					</view>
-					<view class="list-item flex justify-between align-items">
+					<!-- <view class="list-item flex justify-between align-items">
 						<text>时间</text>
 						<text class="right">2020-10-31 23:12:00</text>
-					</view>
+					</view> -->
 				</view>
 				<!-- 物流 -->
 				<view class="process-wrap">
 					<view class="process-title flex align-items">物流信息</view>
-					<view class="process-subtitle flex align-items">韵达快递 4305512637519</view>
-					<view class="process-content">
-						<logistics :wlInfo="wlInfo"></logistics>
-					</view>
+					<template v-if="express">
+						<view class="process-subtitle flex align-items">{{ express.expressCompanyName }} {{ express.expressSheetNo }}</view>
+						<view class="swipe-action">
+							<!-- 物流信息 -->
+							<!-- <logistics :wlInfo="wlInfo"></logistics> -->
+							<view v-for="(item, index) of express.expressDetail" :key="index" class="cont flex">
+								<!-- 左边 -->
+								<view class="time-wrap flex flex-column justify-center align-items">
+									<text v-if="item.time" class="time">{{ item.date }}</text>
+									<text v-if="item.date" class="date">{{ item.time }}</text>
+									<!-- 圆 -->
+									<view class="circular-wrap flex align-items justify-center"><text class="circular-active"></text></view>
+								</view>
+								<!-- 右边 -->
+								<view class="content-wrap">
+									<text>{{ item.AcceptStation }}</text>
+								</view>
+							</view>
+						</view>
+						<view v-show="!isopenProcess" style="height: 80rpx;" @click="openProcess" class="flex align-items justify-center open-process">
+							点击查看更多物流详情
+							<image src="/static/shop/xiala.png" mode="widthFix"></image>
+						</view>
+						<view v-show="isopenProcess" style="height: 80rpx;" @click="openProcess" class="flex align-items justify-center open-process">
+							点击收起
+							<image src="/static/shop/shang.png" mode="widthFix"></image>
+						</view>
+					</template>
+					<view v-else class="flex align-items justify-center" style="height: 80rpx;color: #888;">暂无快递信息!!</view>
 				</view>
 			</view>
 			<!-- 清单 -->
@@ -99,15 +132,13 @@
 						<view class="item3 flex align-items justify-center">发票</view>
 						<view class="item4 flex align-items justify-center">税票</view>
 					</view>
-					<view class="form-item flex" v-for="(item,index) of 5" :key="index">
-						<view class="item1 flex align-items justify-center">张学友</view>
-						<view class="item2 flex align-items justify-center">¥ 68888.00</view>
-						<navigator class="item3 flex align-items justify-center">查看</navigator>
-						<navigator class="item4 flex align-items justify-center">查看</navigator>
+					<view class="form-item flex" v-for="(item, index) of makerList" :key="index">
+						<view class="item1 flex align-items justify-center">{{ item.name }}</view>
+						<view class="item2 flex align-items justify-center">¥{{ item.totalFee }}</view>
+						<view @click="openFile(item.invoiceUrl)" class="item3 flex align-items justify-center">查看</view>
+						<view @click="openFile(item.taxUrl)" class="item4 flex align-items justify-center">查看</view>
 					</view>
-					<view class="flex align-items justify-center" style="height: 80rpx; color: #999;">
-						---我也是有底线的---
-					</view>
+					<view class="flex align-items justify-center" style="height: 80rpx; color: #999;">---我也是有底线的---</view>
 				</view>
 			</view>
 		</view>
@@ -116,79 +147,138 @@
 
 <script>
 import logistics from '@/components/xinyu-logistics/xinyu-logistics.vue';
+import { gePayEnterpriseDetail, getPayMakerList, getPayExpressDetail } from '@/api/enterprise.js';
+let wlInfo = {
+	expressCompanyName: '韵达快递', //快递名称
+	expressSheetNo: '95546', //快递电话
+	//物流信息
+	expressDetail: [
+		{
+			// AcceptTime: '2020-04-12 12:58:53',
+			date: '2020-04-12',
+			time: '12:58:53',
+			AcceptStation: '江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888'
+		},
+		{
+			// AcceptTime: '2020-04-12 12:58:53',
+			date: '2020-04-12',
+			time: '12:58:53',
+			AcceptStation: '江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888'
+		},
+		{
+			// AcceptTime: '2020-04-12 12:58:53',
+			date: '2020-04-12',
+			time: '12:58:53',
+			AcceptStation: '江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888'
+		},
+		{
+			// AcceptTime: '2020-04-12 12:58:53',
+			date: '2020-04-12',
+			time: '12:58:53',
+			AcceptStation: '江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888'
+		},
+		{
+			// AcceptTime: '2020-04-12 12:58:53',
+			date: '2020-04-12',
+			time: '12:58:53',
+			AcceptStation: '江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888'
+		},
+		{
+			// AcceptTime: '2020-04-12 12:58:53',
+			date: '2020-04-12',
+			time: '12:58:53',
+			AcceptStation: '江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888'
+		}
+	]
+};
 export default {
 	components: { logistics },
 	data() {
 		return {
+			isopenProcess: true,
+			payEnterpriseId: '',
 			type: '',
-			wlInfo: {
-			    delivery_status: 1, //快递状态 1已签收 2配送中
-			    // post_name: '韵达快递', //快递名称
-			    // logo: 'https://cdn.kuaidi100.com/images/all/56/yunda.png', //快递logo
-			    // exp_phone: '95546', //快递电话
-			    // post_no: '4304678557725', //快递单号
-				addrUser:"小梅",
-				userPhone:"18244909688",
-			    addr: '江西省南昌市青云谱区', //收货地址
-			    //物流信息
-			    list: [
-			        {
-			            "time": "2020-04-12 12:58:53",
-			            "timeArr": ['2020-04-12', '12:58:53'],
-			            "context": "江西南昌青云谱区 进行派件扫描；派送业务员：张三；联系电话：88888888888",
-			            "location": ""
-			        },
-			        {
-			            "time": "2020-04-11 15:45:44",
-			            "timeArr": ['2020-04-11', '15:45:44'],
-			            "context": "江西南昌分拨中心 从站点发出，本次转运目的地：江西南昌青云谱区",
-			            "location": ""
-			        },
-			        {
-			            "time": "2020-04-11 15:08:45",
-			            "timeArr": ['2020-04-11', '15:08:45'],
-			            "context": "江西南昌分拨中心 在分拨中心进行卸车扫描",
-			            "location": ""
-			        },
-			        {
-			            "time": "2020-04-10 17:42:41",
-			            "timeArr": ['2020-04-10', '17:42:41'],
-			            "context": "浙江义乌分拨中心 进行装车扫描，发往：江西南昌分拨中心",
-			            "location": ""
-			        },
-			        {
-			            "time": "2020-04-10 17:39:38",
-			            "timeArr": ['2020-04-10', '17:39:38'],
-			            "context": "浙江义乌分拨中心 在分拨中心进行称重扫描",
-			            "location": ""
-			        },
-			        {
-			            "time": "2020-04-10 16:02:46",
-			            "timeArr": ['2020-04-10', '16:02:46'],
-			            "context": "浙江义乌城西公司 进行下级地点扫描，发往：江西南昌地区包",
-			            "location": ""
-			        },
-			        {
-			            "time": "2020-04-10 15:48:42",
-			            "timeArr": ['2020-04-10', '15:48:42'],
-			            "context": "浙江义乌城西公司城西营销部 进行揽件扫描",
-			            "location": ""
-			        },
-					{
-					    "time": "2020-04-12 13:00:57",
-					    "timeArr": ['2020-04-12', '13:00:57'],
-					    "context": "江西南昌青云谱区 快件已被 丰巢智能柜 代签收。",
-					    "location": ""
-					}
-			    ]
-			}
+			makerList: [],
+			payEnterpriseData: {},
+			express: {}
 		};
+	},
+	methods: {
+		openProcess() {
+			this.isopenProcess = !this.isopenProcess;
+			let list = JSON.parse(JSON.stringify(wlInfo.expressDetail));
+			if (this.isopenProcess) {
+				this.express.expressDetail = list;
+			} else {
+				this.express.expressDetail = list.slice(0, 2);
+			}
+		},
+		openFile(url) {
+			if (url) {
+				uni.previewImage({
+					urls
+				});
+			}
+		}
 	},
 	onLoad(options) {
 		if (options && options.type) {
 			// this.title = parseInt(options.type)==0?'总包+分包交易明细':"众包/众采交易明细";
 			this.type = parseInt(options.type);
 		}
+
+		if (options && options.payEnterpriseId) {
+			this.payEnterpriseId = options.payEnterpriseId;
+		}
+		gePayEnterpriseDetail({ payEnterpriseId: this.payEnterpriseId })
+			.then(res => {
+				this.payEnterpriseData = res.data;
+			})
+			.catch(res => {
+				this.$toast(res.msg);
+			});
+		this.express = JSON.parse(JSON.stringify(wlInfo));
+		if(this.express.expressDetail.length>2){
+			this.isopenProcess = false
+			this.express.expressDetail = wlInfo.expressDetail.slice(0, 2);
+		}else{
+			this.isopenProcess = true
+		}
+		getPayExpressDetail({ payEnterpriseId: this.payEnterpriseId })
+			.then(res => {
+				console.log('res===>', res.data);
+
+				if (res.data) {
+					wlInfo = res.data;
+				}
+				let arr = [];
+				// 数据重构
+				wlInfo.expressDetail.forEach(item => {
+					let arrSplit = item.AcceptTime.split(' ');
+					arr.push({
+						date: arrSplit[0],
+						time: arrSplit[1],
+						AcceptStation: item.AcceptStation
+					});
+				});
+				wlInfo.expressDetail = arr;
+				this.express = JSON.parse(JSON.stringify(wlInfo));
+				if (wlInfo.expressDetail.length > 2) {
+					this.isopenProcess = false
+					this.express.expressDetail = wlInfo.list.slice(0, 2);
+				}
+			})
+			.catch(res => {
+				this.$toast(res.msg);
+			});
+
+		getPayMakerList({ payEnterpriseId: this.payEnterpriseId })
+			.then(res => {
+				this.makerList = res.data.records;
+			})
+			.catch(res => {
+				this.$toast(res.msg);
+			});
 	}
 };
 </script>
@@ -214,7 +304,7 @@ export default {
 		}
 		.content {
 			margin-top: 20rpx;
-			padding: 0 30rpx;
+
 			background-color: #fff;
 			.title {
 				color: #000;
@@ -224,6 +314,7 @@ export default {
 			}
 			.list-wrap {
 				border-top: 1rpx solid $color-gray;
+				padding: 0 30rpx;
 				.list-title {
 					color: #000;
 				}
@@ -242,59 +333,140 @@ export default {
 			.process-wrap {
 				border-top: 1rpx solid $color-gray;
 				.process-title {
+					padding: 0 30rpx;
 					color: #000;
 					height: 60rpx;
 					font-size: 24rpx;
 				}
 				.process-subtitle {
+					padding: 0 30rpx;
 					height: 60rpx;
 					color: #999999;
 					font-size: 24rpx;
 				}
 			}
-			
 		}
-		.associate-list{
+		.associate-list {
 			background-color: #fff;
 			margin-top: 20rpx;
 			padding: 0 30rpx;
-			.title{
+			.title {
 				height: 80rpx;
 				border-bottom: 1rpx solid $color-gray;
 			}
-			.form-wrap{
+			.form-wrap {
 				overflow-y: auto;
 				height: 500rpx;
-				.form-header{
+				.form-header {
 					color: #000;
 				}
-				.form-item{
+				.form-item {
 					color: #888;
-					.item3{
-						color: #1890FF;
+					.item3 {
+						color: #1890ff;
 					}
-					.item4{
-						color: #1890FF;
+					.item4 {
+						color: #1890ff;
 					}
 				}
-				.form-header,.form-item{
+				.form-header,
+				.form-item {
 					height: 80rpx;
 					font-size: 24rpx;
 					border-bottom: 1rpx solid $color-gray;
-					.item1{
+					.item1 {
 						flex: 1;
 					}
-					.item2{
+					.item2 {
 						flex: 2;
 					}
-					.item3{
+					.item3 {
 						flex: 1;
 					}
-					.item4{
+					.item4 {
 						flex: 1;
 					}
 				}
 			}
+		}
+	}
+}
+
+.open-process {
+	color: #888;
+	image {
+		width: 20rpx;
+		margin-left: 10rpx;
+	}
+}
+
+// 物流样式
+.swipe-action {
+	.cont {
+		// 激活样式
+		min-height: 160rpx;
+		&:last-child {
+			.circular-active {
+				width: 12rpx;
+				height: 12rpx;
+				background: #0576fe;
+				border-radius: 50%;
+			}
+			.state-active {
+				background: #50d54e !important;
+			}
+		}
+		.time-wrap {
+			position: relative;
+			flex: 2.5;
+			padding-top: 33rpx;
+			border-right: 1rpx #dddddd dashed;
+			.time {
+				font-size: 24rpx;
+				color: #333333;
+			}
+			.date {
+				font-size: 24rpx;
+				color: #333333;
+				opacity: 0.5;
+			}
+			.circular-wrap {
+				position: absolute;
+				top: 50rpx;
+				right: 0;
+				transform: translateX(50%);
+				width: 20rpx;
+				height: 20rpx;
+				background: #c8e1ff;
+				border-radius: 50%;
+			}
+		}
+		.content-wrap {
+			flex: 5;
+			padding: 33rpx 41rpx;
+			// 标题
+			// .title {
+			// 	.name {
+			// 		font-size: 32rpx;
+			// 		color: #333333;
+			// 		font-weight: 600;
+			// 	}
+			// 	.state {
+			// 		margin-left: 28rpx;
+			// 		display: inline-block;
+			// 		font-size: 20rpx;
+			// 		color: #ffffff;
+			// 		width: 120rpx;
+			// 		background: #cccccc;
+			// 		border-radius: 20rpx;
+			// 		text-align: center;
+			// 	}
+			// }
+			// .item {
+			// 	width: 100%;
+			// 	font-size: 28rpx;
+			// 	color: #333333;
+			// }
 		}
 	}
 }

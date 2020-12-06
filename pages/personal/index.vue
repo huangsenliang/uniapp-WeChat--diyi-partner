@@ -40,7 +40,7 @@ export default {
 		};
 	},
 	onShow() {
-		this.fetchData();
+		this.resetData();
 	},
 	methods: {
 		change(index) {

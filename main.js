@@ -2,7 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui"
 import store from './store'
-const dayjs = require('@/utils/dayjs.min.js')
+const dayjs = require('@/utils/dayjs.min.js');
+import * as filters from './common/filter.js'
 
 import {
 	getInfo
@@ -17,6 +18,10 @@ Vue.config.productionTip = false
 
 App.mpType = 'app'
 
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
 Vue.prototype.$toast = function(msg, type, options) {
 	if (!msg) return;
 	options = options || {}
@@ -26,6 +31,18 @@ Vue.prototype.$toast = function(msg, type, options) {
 		type: type ? 'success' : 'error',
 		duration: options.duration || 2000
 	});
+}
+
+// 轻提示
+Vue.prototype.toast = (content, position) => {
+	if (content) {
+		uni.showToast({
+			title: content,
+			icon: 'none',
+			position: position || 'bottom',
+			duration: 2000
+		})
+	}
 }
 
 Vue.prototype.$toPage = function(url) {
@@ -151,6 +168,15 @@ Vue.prototype.$previewImg = function(src) {
 		});
 	}
 }
+
+// 图片预览
+Vue.prototype.$previewImage = (url)=>{
+			if (url) {
+				uni.previewImage({
+					urls: [url],
+				});
+			}
+		},
 
 /**
  * 更新用户信息

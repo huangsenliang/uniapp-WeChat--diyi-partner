@@ -39,6 +39,7 @@
 export default {
 	data() {
 		return {
+		eventName:"",	
 		lists: [],
 		status: 'loadmore',
 		paramsData: {
@@ -47,12 +48,19 @@ export default {
 		}
 		};
 	},
+	onLoad(options){
+		if(options&&options.eventName){
+			this.eventName = options.eventName;
+		}
+	},
 	onShow() {
 		this.resetData();
 	},
 	methods: {
 		choose(item) {
-			uni.$emit('choose', 'address', item);
+			if(this.eventName){
+				this.$EventBus.$emit(this.eventName, JSON.stringify(item))
+			}
 			uni.navigateBack({});
 		},
 		resetData(pulldown) {

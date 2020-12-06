@@ -43,7 +43,7 @@
 </template>
 
 <script>
-	import {getDetail2} from '@/api/personal.js';
+	import {getDetail2} from '@/api/individual.js';
 export default {
 	props: {
 		info: {
@@ -64,6 +64,20 @@ export default {
 				return "";
 			}
 		},
+	},
+	created(){
+		if(this.type==="editor"){
+			getDetail2({
+				individualEnterpriseId: this.individualBusinessId 
+			}).then(res=>{
+				console.log("经营者信息填充数据：",res.data)
+				this.formData.name = res.data.name;
+				this.formData.idcardNo = res.data.idcardNo;
+				this.formData.idcardPic = res.data.idcardPic;
+				this.formData.idcardPicBack = res.data.idcardPicBack;
+				this.formData.makerId = res.data.makerId;
+			})
+		}
 	},
 	data() {
 		return {
@@ -101,7 +115,6 @@ export default {
 				this.formData.idcardPic = data.idcardPic;
 				this.formData.idcardPicBack = data.idcardPicBack;
 				this.formData.makerId = data.id;
-				console.log("页面返还数据======",data)
 			});
 			uni.navigateTo({
 				url: '/pages/common/makeList?eventName='+eventName
@@ -124,8 +137,8 @@ export default {
 			});
 		},
 		next() {
-			this.info.makerId = this.formData.makerId;
-			this.$emit('next', this.info);
+			// this.info = this.formData;
+			this.$emit('next', this.formData);
 		},
 		prev(e) {
 			this.$emit('prev');

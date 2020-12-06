@@ -23,7 +23,7 @@ import toastModal from '@/components/toastModal.vue';
 import companyInfo from './components/companyInfo.vue';
 import userInfo from './components/userInfo.vue';
 import handle from './components/handle.vue';
-import { save } from '@/api/individual.js';
+import { save,getDetail } from '@/api/individual.js';
 export default {
 	components: {
 		companyInfo,
@@ -69,18 +69,7 @@ export default {
 		uni.setNavigationBarTitle({
 			title: this.numList[this.current].title
 		});
-		// this.$loading();
-		// getIdCard()
-		// 	.then(res => {
-		// 		this.$loading(false);
-		// 		const data = res.data;
-		// 		this.verifiedInfo = data || {};
-		// 	})
-		// 	.catch(res => {
-		// 		this.$loading();
-		// 		this.$toast(res.msg);
-		// 		this.$back();
-		// 	});
+		
 	},
 	watch: {
 		current(newVal) {
@@ -92,9 +81,10 @@ export default {
 	methods: {
 		getDataForm(){
 			getDetail({
-				individualBusinessId: this.individualBusinessId 
+				individualEnterpriseId: this.individualBusinessId 
 			}).then(res => {
 				let data = res.data
+				console.log("data=======",data)
 				if (this.$u.test.isEmpty(data.ibname)) {
 					data.ibname = data.candidatedNames.split(',')[0]
 				}
